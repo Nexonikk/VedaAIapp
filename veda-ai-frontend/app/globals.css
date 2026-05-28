@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f9fafb;
+  --foreground: #111827;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+@media print {
+  .print\:hidden { display: none !important; }
+  .print\:shadow-none { box-shadow: none !important; }
+  .print\:rounded-none { border-radius: 0 !important; }
+  .print\:border-none { border: none !important; }
+  body { background: white; }
+}

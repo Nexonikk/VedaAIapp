@@ -1,0 +1,44 @@
+{
+  "name": "veda-ai-backend",
+  "version": "1.0.0",
+  "description": "VedaAI Backend – AI Assessment Creator API",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "worker": "tsx src/workers/assessment.worker.ts",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:push": "prisma db push",
+    "prisma:studio": "prisma studio"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.0.0",
+    "bullmq": "^5.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.18.0",
+    "helmet": "^7.0.0",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "redis": "^5.12.1",
+    "uuid": "^9.0.0",
+    "ws": "^8.0.0",
+    "zod": "^3.22.0",
+    "zod-to-json-schema": "^3.22.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.0",
+    "@types/express": "^4.17.0",
+    "@types/morgan": "^1.9.0",
+    "@types/multer": "^1.4.0",
+    "@types/node": "^20.19.41",
+    "@types/uuid": "^9.0.0",
+    "@types/ws": "^8.0.0",
+    "nodemon": "^3.0.0",
+    "prisma": "^6.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
+  }
+}

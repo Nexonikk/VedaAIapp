@@ -1,0 +1,151 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ── Enums ─────────────────────────────────────────────────────────────────────
+
+enum AssignmentStatus {
+  DRAFT
+  ACTIVE
+  COMPLETED
+  ARCHIVED
+}
+
+enum JobStatus {
+  QUEUED
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+enum Difficulty {
+  EASY
+  MODERATE
+  CHALLENGING
+}
+
+// ── Models ────────────────────────────────────────────────────────────────────
+
+/// Represents a teacher's assignment creation request
+model Assignment {
+  id             String           @id @default(uuid())
+  title          String
+  dueDate        DateTime
+  additionalInfo String?
+  filePath       String?          // uploaded file path (optional)
+  status         AssignmentStatus @default(ACTIVE)
+  totalQuestions Int              @default(0)
+  totalMarks     Int              @default(0)
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  /// The teacher identifier (simple string, no auth required per spec)
+  teacherId String @default("default-teacher")
+
+  /// Nested question type config provided by the teacher
+  questionTypeConfig QuestionTypeConfig[]
+
+  /// The AI-generated output (one per assignment)
+  output GeneratedOutput?
+
+  /// BullMQ job tracking
+  job AssignmentJob?
+
+  @@map("assignments")
+}
+
+/// Question type rows from the create-assignment form
+model QuestionTypeConfig {
+  id             String     @id @default(uuid())
+  assignmentId   String
+  questionType   String     // "Multiple Choice Questions", "Short Questions", etc.
+  noOfQuestions  Int
+  marksPerQuestion Int
+
+  assignment Assignment @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
+
+  @@map("question_type_configs")
+}
+
+/// The AI-generated question paper tied to an assignment
+model GeneratedOutput {
+  id           String   @id @default(uuid())
+  assignmentId String   @unique
+  paperTitle   String
+  subject      String
+  className    String
+  timeAllowed  String
+  maximumMarks Int
+  generatedAt  DateTime @default(now())
+
+  assignment Assignment @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
+
+  sections  Section[]
+  answerKey AnswerKeyItem[]
+
+  @@map("generated_outputs")
+}
+
+/// A section within the generated paper (Section A, B, etc.)
+model Section {
+  id          String @id @default(uuid())
+  outputId    String
+  title       String // "Section A"
+  instruction String // "Attempt all questions..."
+  order       Int    @default(0)
+
+  output    GeneratedOutput @relation(fields: [outputId], references: [id], onDelete: Cascade)
+  questions Question[]
+
+  @@map("sections")
+}
+
+/// A single question within a section
+model Question {
+  id         String     @id @default(uuid())
+  sectionId  String
+  text       String
+  difficulty Difficulty
+  marks      Int
+  order      Int        @default(0)
+
+  section   Section         @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  answerKey AnswerKeyItem[]
+
+  @@map("questions")
+}
+
+/// Answer key entries for generated questions
+model AnswerKeyItem {
+  id         String @id @default(uuid())
+  outputId   String
+  questionId String
+  answer     String @db.Text
+
+  output   GeneratedOutput @relation(fields: [outputId], references: [id], onDelete: Cascade)
+  question Question        @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@map("answer_key_items")
+}
+
+/// BullMQ job state tracker
+model AssignmentJob {
+  id           String    @id @default(uuid())
+  assignmentId String    @unique
+  bullJobId    String    @unique // BullMQ job ID
+  status       JobStatus @default(QUEUED)
+  progress     Int       @default(0)
+  errorMessage String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  assignment Assignment @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
+
+  @@map("assignment_jobs")
+}
