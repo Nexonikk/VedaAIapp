@@ -1,8 +1,8 @@
-import { prisma } from "@/config/database";
-import { AppError } from "@/middleware/error";
-import { serializeAssignment, serializeOutput } from "@/lib/serializers";
-import type { CreateAssignmentInput } from "@/lib/schemas";
-import type { AssignmentResponse, GeneratedOutputResponse, AIGeneratedPaper } from "@/types";
+import { prisma } from "../config/database";
+import { AppError } from "../middleware/error";
+import { serializeAssignment, serializeOutput } from "../lib/serializers";
+import type { CreateAssignmentInput } from "../lib/schemas";
+import type { AssignmentResponse, GeneratedOutputResponse, AIGeneratedPaper } from "../types";
 
 const ASSIGNMENT_INCLUDE = {
   questionTypeConfig: true,

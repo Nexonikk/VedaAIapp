@@ -19,11 +19,7 @@
 
     "moduleResolution": "node",
 
-    "types": ["node"],
-
-    "paths": {
-      "@/*": ["./src/*"]
-    }
+    "types": ["node"]
   },
 
   "include": [

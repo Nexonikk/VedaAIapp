@@ -1,5 +1,5 @@
 import { Queue } from "bullmq";
-import { env } from "@/config/env";
+import { env } from "./env";
 
 export const QUEUE_NAMES = {
   ASSESSMENT_GENERATION: "assessment-generation",

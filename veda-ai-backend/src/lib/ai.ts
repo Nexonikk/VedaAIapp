@@ -1,7 +1,7 @@
 import { zodToJsonSchema } from "zod-to-json-schema";
-import { aiGeneratedPaperSchema, type AIGeneratedPaper } from "@/lib/schemas";
-import { buildAssessmentPrompt } from "@/lib/prompt";
-import { env } from "@/config/env";
+import { aiGeneratedPaperSchema, type AIGeneratedPaper } from "./schemas";
+import { buildAssessmentPrompt } from "./prompt";
+import { env } from "../config/env";
 
 function removeAdditionalProperties(schema: Record<string, unknown>): Record<string, unknown> {
   const result: Record<string, unknown> = {};

@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import { asyncHandler, AppError } from "@/middleware/error";
-import * as assignmentService from "@/services/assignment.service";
-import * as jobService from "@/services/job.service";
-import { createAssignmentSchema } from "@/lib/schemas";
-import type { AssessmentJobData } from "@/config/queue";
+import { asyncHandler, AppError } from "../middleware/error";
+import * as assignmentService from "../services/assignment.service";
+import * as jobService from "../services/job.service";
+import { createAssignmentSchema } from "../lib/schemas";
+import type { AssessmentJobData } from "../config/queue";
 
 export const getAll = asyncHandler(async (_req: Request, res: Response) => {
   const assignments = await assignmentService.getAllAssignments();
@@ -79,7 +79,7 @@ export const getOutput = asyncHandler(async (req: Request, res: Response) => {
 export const regenerate = asyncHandler(async (req: Request, res: Response) => {
   const id = String(req.params.id);
 
-  const { prisma } = await import("@/config/database");
+  const { prisma } = await import("../config/database");
   const full = await prisma.assignment.findUnique({
     where: { id },
     include: { questionTypeConfig: true },

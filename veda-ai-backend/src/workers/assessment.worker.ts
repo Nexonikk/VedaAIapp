@@ -1,10 +1,10 @@
 import "dotenv/config";
 import { Worker, Job } from "bullmq";
-import { QUEUE_NAMES, type AssessmentJobData, type AssessmentJobResult, getConnectionConfig } from "@/config/queue";
-import { generateAssessment } from "@/lib/ai";
-import { saveGeneratedOutput, updateAssignmentStatus } from "@/services/assignment.service";
-import { updateJobStatus } from "@/services/job.service";
-import { sendToJob } from "@/lib/websocket";
+import { QUEUE_NAMES, type AssessmentJobData, type AssessmentJobResult, getConnectionConfig } from "../config/queue";
+import { generateAssessment } from "../lib/ai";
+import { saveGeneratedOutput, updateAssignmentStatus } from "../services/assignment.service";
+import { updateJobStatus } from "../services/job.service";
+import { sendToJob } from "../lib/websocket";
 
 async function processAssessmentJob(
   job: Job<AssessmentJobData, AssessmentJobResult>

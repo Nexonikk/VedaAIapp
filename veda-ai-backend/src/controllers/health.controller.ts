@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { prisma } from "@/config/database";
-import { pingRedis } from "@/config/redis";
-import { env } from "@/config/env";
+import { prisma } from "../config/database";
+import { pingRedis } from "../config/redis";
+import { env } from "../config/env";
 
 export async function healthCheck(_req: Request, res: Response): Promise<void> {
   const checks: Record<string, "ok" | "error"> = { server: "ok", database: "ok", redis: "ok" };

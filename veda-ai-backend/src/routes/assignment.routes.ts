@@ -1,6 +1,6 @@
 import { Router } from "express";
-import * as controller from "@/controllers/assignment.controller";
-import { upload } from "@/middleware/upload";
+import * as controller from "../controllers/assignment.controller";
+import { upload } from "../middleware/upload";
 
 const router = Router();
 

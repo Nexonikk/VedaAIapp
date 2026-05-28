@@ -1,6 +1,6 @@
 import { Router } from "express";
 import assignmentRoutes from "./assignment.routes";
-import { healthCheck } from "@/controllers/health.controller";
+import { healthCheck } from "../controllers/health.controller";
 
 const router = Router();
 

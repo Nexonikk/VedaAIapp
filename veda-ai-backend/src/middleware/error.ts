@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { ZodError } from "zod";
-import { env } from "@/config/env";
+import { env } from "../config/env";
 
 export class AppError extends Error {
   constructor(

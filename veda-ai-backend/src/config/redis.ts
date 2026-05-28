@@ -1,5 +1,5 @@
 import { createClient } from "redis";
-import { env } from "@/config/env";
+import { env } from "./env";
 
 // ✅ FIXED Redis health check
 export async function pingRedis(): Promise<boolean> {

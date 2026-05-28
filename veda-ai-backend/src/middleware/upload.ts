@@ -1,7 +1,7 @@
 import multer from "multer";
 import path from "path";
 import fs from "fs";
-import { env } from "@/config/env";
+import { env } from "../config/env";
 import { Request } from "express";
 
 // Ensure upload dir exists

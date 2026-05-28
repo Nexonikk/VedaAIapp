@@ -1,5 +1,5 @@
-import { prisma } from "@/config/database";
-import { getAssessmentQueue, type AssessmentJobData } from "@/config/queue";
+import { prisma } from "../config/database";
+import { getAssessmentQueue, type AssessmentJobData } from "../config/queue";
 
 export async function enqueueAssessmentJob(
   assignmentId: string,

@@ -3,7 +3,7 @@ import type {
   GeneratedOutputResponse,
   SectionResponse,
   QuestionResponse,
-} from "@/types";
+} from "../types";
 
 interface RawQuestion {
   id: string;

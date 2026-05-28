@@ -1,11 +1,11 @@
 import "dotenv/config";
 import http from "http";
 import { createApp } from "./app";
-import { env } from "@/config/env";
-import { connectDB, disconnectDB } from "@/config/database";
-import { closeQueues } from "@/config/queue";
-import { initWebSocketServer } from "@/lib/websocket";
-import { startWorker } from "@/workers/assessment.worker";
+import { env } from "./config/env";
+import { connectDB, disconnectDB } from "./config/database";
+import { closeQueues } from "./config/queue";
+import { initWebSocketServer } from "./lib/websocket";
+import { startWorker } from "./workers/assessment.worker";
 import type { Worker } from "bullmq";
 
 let worker: Worker | null = null;

@@ -3,9 +3,9 @@ import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 import path from "path";
-import { env } from "@/config/env";
-import router from "@/routes";
-import { globalErrorHandler, notFoundHandler } from "@/middleware/error";
+import { env } from "./config/env";
+import router from "./routes";
+import { globalErrorHandler, notFoundHandler } from "./middleware/error";
 
 export function createApp(): express.Application {
   const app = express();
